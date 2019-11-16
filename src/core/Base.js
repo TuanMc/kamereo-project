@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Sidebar from './Sidebar'
+import Sidebar from './Sidebar';
 import Header from './Header';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from '../routes/Routes';
@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
     },
     content: {
         flexGrow: 1,
-        paddingTop: theme.spacing(8),
+        paddingTop: theme.spacing(16),
         paddingRight: theme.spacing(4),
         paddingLeft: theme.spacing(4),
     },
@@ -31,11 +31,11 @@ export default function Base() {
                 <Header />
                 {/* Sidebar */}
                 <Sidebar />
+
                 {/* Body section */}
-                <main className={classes.content}>
-                    <div className={classes.toolbar} />
+                <div className={classes.content}>
                     <Routes />
-                </main>
+                </div>
             </div>
         </Router>
     )

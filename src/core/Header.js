@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
 export default function Header(props) {
 
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
 
     const isMenuOpen = Boolean(anchorEl);
 
@@ -77,9 +77,13 @@ export default function Header(props) {
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
         </Menu>
     );
+
+    useEffect(() => {
+        
+    }, [])
     
     return (
-        <div className={classes.grow}>
+        <>
             <AppBar
                 position="fixed"
                 className={classes.appBar}
@@ -142,6 +146,6 @@ export default function Header(props) {
                 </Toolbar>
             </AppBar>
             {renderMenu}
-        </div>
+        </>
     )
 }
