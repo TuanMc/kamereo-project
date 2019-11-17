@@ -5,7 +5,6 @@ const useStyles = makeStyles({
     thumbnail: {
         width: '100%',
         height: 'auto',
-        padding: '20px 10px',
     }
 })
 
