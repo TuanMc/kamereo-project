@@ -1,0 +1,17 @@
+{
+    "id": "123abc",
+    "logoUrl": "",
+    "name": "K.O.Thé.",
+    "address": "521 Hồ Tùng Mậu",
+    "district": "1",
+    "city": "HCM",
+    "phone": "(338) 886-9944",
+    "redInvoice": {
+        "name": "K.O.I Thé International Company",
+        "address": "9682 Wakehurst Avenue",
+        "district": "Arlington Heights",
+        "city": "IL",
+        "zipCode": "60004",
+        "taxCode": "P77744944"
+    }
+}

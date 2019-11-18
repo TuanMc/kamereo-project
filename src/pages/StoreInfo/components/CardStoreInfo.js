@@ -31,7 +31,10 @@ const useStyles = makeStyles(theme => ({
 
 const CardStoreInfo = (props) => {
     const classes = useStyles();
-    const { handleOpenEditModal } = props
+    const { 
+        data, 
+        handleOpenEditModal 
+    } = props
 
     return (
         <Card className={classes.storeInfo}>
@@ -54,7 +57,7 @@ const CardStoreInfo = (props) => {
                             <span className={classes.cardLabel}>Name:</span>
                         </Grid>
                         <Grid item md={7}>
-                            <span>K.O.I Thé.</span>
+                            <span>{data.name}</span>
                         </Grid>
                     </Grid>
                     <Grid container className={classes.cardRow}>
@@ -62,7 +65,7 @@ const CardStoreInfo = (props) => {
                             <span className={classes.cardLabel}>Address:</span>
                         </Grid>
                         <Grid item md={7}>
-                            <span>521 Hồ Tùng Mậu, D1, HCM</span>
+                            <span>{`${data.address}, D.${data.district}, ${data.city}`}</span>
                         </Grid>
                     </Grid>
                     <Grid container className={classes.cardRow}>
@@ -70,7 +73,7 @@ const CardStoreInfo = (props) => {
                             <span className={classes.cardLabel}>Phone#:</span>
                         </Grid>
                         <Grid item md={7}>
-                            <span>(388) 886-944</span>
+                            <span>{data.phone}</span>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -87,7 +90,7 @@ const CardStoreInfo = (props) => {
                             <span className={classes.cardLabel}>Company Name:</span>
                         </Grid>
                         <Grid item md={7}>
-                            <span>K.O.I Thé International Company</span>
+                            <span>{data.redInvoice && data.redInvoice.name}</span>
                         </Grid>
                     </Grid>
                     <Grid container className={classes.cardRow}>
@@ -95,7 +98,7 @@ const CardStoreInfo = (props) => {
                             <span className={classes.cardLabel}>Address:</span>
                         </Grid>
                         <Grid item md={7}>
-                            <span>9682 Wakehurst Avenue Arlington Heights, IL 60004</span>
+                            <span>{data.redInvoice && `${data.redInvoice.address}, ${data.redInvoice.district}, ${data.redInvoice.city} ${data.redInvoice.zipCode}`}</span>
                         </Grid>
                     </Grid>
                     <Grid container className={classes.cardRow}>
@@ -103,7 +106,7 @@ const CardStoreInfo = (props) => {
                             <span className={classes.cardLabel}>MST:</span>
                         </Grid>
                         <Grid item md={7}>
-                            <span>P77744944</span>
+                            <span>{data.redInvoice && data.redInvoice.taxCode}</span>
                         </Grid>
                     </Grid>
 

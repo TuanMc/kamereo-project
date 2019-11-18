@@ -36,7 +36,7 @@ const useStyles = makeStyles(() => ({
 
 const DialogEditStoreInfo = (props) => {
     const classes = useStyles();
-    const { openEditModal, handleCloseModal } = props
+    const { data, openEditModal, handleCloseModal, handleUpdateStoreInfo } = props
     const [districts, setDistricts] = useState(null);
     const [cities, setCities] = useState(null);
 
@@ -59,7 +59,6 @@ const DialogEditStoreInfo = (props) => {
                 value: "Quận 4"
             },
         ])
-
         setCities([
             {
                 id: 1,
@@ -81,7 +80,7 @@ const DialogEditStoreInfo = (props) => {
             aria-labelledby="scroll-dialog-title"
         >
             <DialogTitle id="scroll-dialog-title">
-                <EditOutlinedIcon /> <b> Edit Store Profile</b>
+                <EditOutlinedIcon style={{ color: '#219249' }} /> <b> Edit Store Profile</b>
             </DialogTitle>
             <DialogContent dividers={true}>
                 <Grid container spacing={3}>
@@ -118,7 +117,7 @@ const DialogEditStoreInfo = (props) => {
                                 <CustomInput
                                     label="Store Name"
                                     placeholder="Name"
-                                    value="K.O.I Thé."
+                                    value={data.name}
                                 />
                             </Grid>
                         </Grid>
@@ -127,6 +126,7 @@ const DialogEditStoreInfo = (props) => {
                                 <CustomInput
                                     label="Store Address"
                                     placeholder="Address"
+                                    value={data.address}
                                 />
                             </Grid>
                             <Grid item md={3}>
@@ -150,7 +150,8 @@ const DialogEditStoreInfo = (props) => {
                             <Grid item md={12}>
                                 <CustomInput
                                     label="Phone #"
-                                    value="(338) 866-9944"
+                                    placeholder="Phone number"
+                                    value={data.address}
                                 />
                             </Grid>
                         </Grid>
@@ -160,7 +161,8 @@ const DialogEditStoreInfo = (props) => {
                             <Grid item md={12}>
                                 <CustomInput
                                     label="Company Name"
-                                    value="K.O.I Thé International Company"
+                                    placeholder="Company Name"
+                                    value={data.redInvoice &&  data.redInvoice.name}
                                 />
                             </Grid>
                         </Grid>
@@ -169,6 +171,7 @@ const DialogEditStoreInfo = (props) => {
                                 <CustomInput
                                     label="Store Address"
                                     placeholder="Address"
+                                    value={data.redInvoice &&  data.redInvoice.address}
                                 />
                             </Grid>
                             <Grid item md={3}>
@@ -192,14 +195,21 @@ const DialogEditStoreInfo = (props) => {
                             <Grid item md={12}>
                                 <CustomInput
                                     label="MST"
-                                    value="(338) 866-9944"
+                                    placeholder="Tax code"
+                                    value={data.redInvoice && data.redInvoice.taxCode}
                                 />
                             </Grid>
                         </Grid>
 
                         <Grid container style={{ marginTop: '20px' }}>
                             <Grid item md={12}>
-                                <CustomButton fullWidth>Save</CustomButton>
+                                <CustomButton 
+                                    style={{ backgroundColor: '#219249', color: "white" }} 
+                                    fullWidth
+                                    // onClick={handleUpdateStoreInfo}
+                                >
+                                    Save
+                                </CustomButton>
                             </Grid>
                             <Grid item md={12}>
                                 <Button
@@ -217,5 +227,7 @@ const DialogEditStoreInfo = (props) => {
         </Dialog>
     )
 }
+
+
 
 export default DialogEditStoreInfo;

@@ -6,12 +6,18 @@ import PageHeader from '../../components/PageHeader';
 import {
     Grid,
 } from "@material-ui/core";
+import { connect } from 'react-redux';
 import DialogEditStoreInfo from './components/DialogEditStoreInfo';
 import CardDefaultMessage from './components/CardDefaultMessage';
 import CardStoreInfo from './components/CardStoreInfo';
 
 
-const StoreInfo = () => {
+const StoreInfo = (props) => {
+    const {
+        storeInfo,
+        errorMessage,
+        onFetchStoreInfo
+    } = props;
     const [openEditModal, setOpenEditModal] = useState(false);
 
     const handleOpenEditModal = () => {
@@ -21,6 +27,15 @@ const StoreInfo = () => {
         setOpenEditModal(false);
     }
 
+    useEffect(() => {
+        onFetchStoreInfo();
+    }, [onFetchStoreInfo])
+
+    useEffect(() => {
+        if (errorMessage)
+            alert(errorMessage)
+    }, [errorMessage])
+
     return (
         <>
             <Grid container spacing={3}>
@@ -29,7 +44,7 @@ const StoreInfo = () => {
                 </Grid>
                 {/* Store Info section */}
                 <Grid item md={4}>
-                    <CardStoreInfo handleOpenEditModal={handleOpenEditModal} />
+                    <CardStoreInfo handleOpenEditModal={handleOpenEditModal} data={storeInfo} />
                 </Grid>
                 {/* End Store Info section */}
                 {/* Default message section */}
@@ -40,6 +55,7 @@ const StoreInfo = () => {
             </Grid>
 
             <DialogEditStoreInfo
+                data={storeInfo}
                 openEditModal={openEditModal}
                 handleCloseModal={handleCloseModal}
             />
@@ -47,4 +63,20 @@ const StoreInfo = () => {
     )
 }
 
-export default StoreInfo;
+const mapStateToProps = states => {
+    return {
+        storeInfo: states.storeInfo.info,
+        errorMessage: states.storeInfo.errorMessage
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onFetchStoreInfo: () => dispatch({ type: "STORE_INFO_FETCH_REQUESTED" })
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(StoreInfo);

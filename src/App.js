@@ -1,9 +1,14 @@
 import React from 'react'
 import Base from './core/Base'
+import { Provider } from 'react-redux'
+import store from './utils/store'
+
 
 function App() {
   return (
-    <Base></Base>
+    <Provider store={store}>
+      <Base></Base>
+    </Provider>
   )
 }
 
