@@ -65,7 +65,7 @@ const CardStoreInfo = (props) => {
                             <span className={classes.cardLabel}>Address:</span>
                         </Grid>
                         <Grid item md={7}>
-                            <span>{`${data.address}, D.${data.district}, ${data.city}`}</span>
+                            <span>{`${data.address}, ${data.district.name}, ${data.city.name}`}</span>
                         </Grid>
                     </Grid>
                     <Grid container className={classes.cardRow}>

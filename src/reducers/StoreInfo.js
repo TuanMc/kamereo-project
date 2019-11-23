@@ -4,8 +4,14 @@ const INITIAL_STATE = {
         logoUrl: "",
         name: "",
         address: "",
-        district: "",
-        city: "",
+        district: {
+            id: "",
+            name: ""
+        },
+        city: {
+            id: "",
+            name: ""
+        },
         phone: "",
         redInvoice: {
             name: "",

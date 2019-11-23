@@ -36,9 +36,32 @@ const useStyles = makeStyles(() => ({
 
 const DialogEditStoreInfo = (props) => {
     const classes = useStyles();
-    const { data, openEditModal, handleCloseModal, handleUpdateStoreInfo } = props
+    const { originalData, openEditModal, handleCloseModal, handleUpdateStoreInfo } = props
     const [districts, setDistricts] = useState(null);
     const [cities, setCities] = useState(null);
+    const [data, setData] = useState({
+        id: "",
+        logoUrl: "",
+        name: "",
+        address: "",
+        district: {
+            id: "",
+            name: ""
+        },
+        city: {
+            id: "",
+            name: ""
+        },
+        phone: "",
+        redInvoice: {
+            name: "",
+            address: "",
+            district: "",
+            city: "",
+            zipCode: "",
+            taxCode: ""
+        }
+    });
 
     useEffect(() => {
         setDistricts([
@@ -69,7 +92,21 @@ const DialogEditStoreInfo = (props) => {
                 value: "TP.Hồ Chí Minh"
             },
         ])
-    }, [])
+        setData(JSON.parse(JSON.stringify(originalData)))
+    }, [openEditModal])
+
+    const handleChange = (event, key = null) => {
+        const target = event.target
+        const value = event.value
+        const name = target.name
+        let newFormData = { ...data }
+        if (key !== null) {
+            newFormData[key][name] = value
+        } else {
+            newFormData[name] = value
+        }
+        setData(newFormData)
+    }
 
     return (
         <Dialog
@@ -115,8 +152,11 @@ const DialogEditStoreInfo = (props) => {
                         <Grid container>
                             <Grid item md={12}>
                                 <CustomInput
+                                    id="name"
+                                    name="name"
                                     label="Store Name"
                                     placeholder="Name"
+                                    onChange={handleChange}
                                     value={data.name}
                                 />
                             </Grid>
@@ -124,24 +164,31 @@ const DialogEditStoreInfo = (props) => {
                         <Grid container spacing={2}>
                             <Grid item md={6}>
                                 <CustomInput
+                                    id="address"
+                                    name="address"
                                     label="Store Address"
                                     placeholder="Address"
+                                    onChange={handleChange}
                                     value={data.address}
                                 />
                             </Grid>
                             <Grid item md={3}>
                                 <CustomSelect
                                     id="district1"
-                                    name="district1"
+                                    name="district"
                                     label="District"
+                                    onChange={handleChange}
+                                    value={data.district && data.district.id}
                                     options={districts}
                                 />
                             </Grid>
                             <Grid item md={3}>
                                 <CustomSelect
                                     id="city1"
-                                    name="city1"
+                                    name="city"
                                     label="City"
+                                    onChange={handleChange}
+                                    value={data.city && data.city.id}
                                     options={cities}
                                 />
                             </Grid>
@@ -149,9 +196,12 @@ const DialogEditStoreInfo = (props) => {
                         <Grid container>
                             <Grid item md={12}>
                                 <CustomInput
+                                    id="phone"
+                                    name="phone"
                                     label="Phone #"
                                     placeholder="Phone number"
-                                    value={data.address}
+                                    onChange={handleChange}
+                                    value={data.phone}
                                 />
                             </Grid>
                         </Grid>
@@ -160,33 +210,41 @@ const DialogEditStoreInfo = (props) => {
                         <Grid container>
                             <Grid item md={12}>
                                 <CustomInput
+                                    id="redInvoice_name"
+                                    name="name"
                                     label="Company Name"
                                     placeholder="Company Name"
-                                    value={data.redInvoice &&  data.redInvoice.name}
+                                    onChange={(e) => handleChange(e, 'redInvoice')}
+                                    value={data.redInvoice && data.redInvoice.name}
                                 />
                             </Grid>
                         </Grid>
                         <Grid container spacing={2}>
                             <Grid item md={6}>
                                 <CustomInput
+                                    id="redInvoice_address"
+                                    name="address"
                                     label="Store Address"
                                     placeholder="Address"
-                                    value={data.redInvoice &&  data.redInvoice.address}
+                                    onChange={(e) => handleChange(e, 'redInvoice')}
+                                    value={data.redInvoice && data.redInvoice.address}
                                 />
                             </Grid>
                             <Grid item md={3}>
                                 <CustomSelect
                                     id="district2"
-                                    name="district2"
+                                    name="district"
                                     label="District"
+                                    onChange={(e) => handleChange(e, "redInvoice")}
                                     options={districts}
                                 />
                             </Grid>
                             <Grid item md={3}>
                                 <CustomSelect
                                     id="city2"
-                                    name="city2"
+                                    name="city"
                                     label="City"
+                                    onChange={(e) => handleChange(e, "redInvoice")}
                                     options={cities}
                                 />
                             </Grid>
@@ -194,8 +252,11 @@ const DialogEditStoreInfo = (props) => {
                         <Grid container>
                             <Grid item md={12}>
                                 <CustomInput
+                                    id="redInvoice_tax_code"
+                                    name="taxCode"
                                     label="MST"
                                     placeholder="Tax code"
+                                    onChange={(e) => handleChange(e, 'redInvoice')}
                                     value={data.redInvoice && data.redInvoice.taxCode}
                                 />
                             </Grid>
@@ -203,10 +264,10 @@ const DialogEditStoreInfo = (props) => {
 
                         <Grid container style={{ marginTop: '20px' }}>
                             <Grid item md={12}>
-                                <CustomButton 
-                                    style={{ backgroundColor: '#219249', color: "white" }} 
+                                <CustomButton
+                                    style={{ backgroundColor: '#219249', color: "white" }}
                                     fullWidth
-                                    // onClick={handleUpdateStoreInfo}
+                                // onClick={handleUpdateStoreInfo}
                                 >
                                     Save
                                 </CustomButton>

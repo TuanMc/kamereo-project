@@ -55,7 +55,7 @@ const StoreInfo = (props) => {
             </Grid>
 
             <DialogEditStoreInfo
-                data={storeInfo}
+                originalData={storeInfo}
                 openEditModal={openEditModal}
                 handleCloseModal={handleCloseModal}
             />
