@@ -68,7 +68,7 @@ const CustomSelect = (props) => {
             >
                 <option value="" />
                 {
-                    options.map(option => <option key={option.id} value={option.id}>{option.value}</option>)
+                    options.map(option => <option key={option} value={option}>{option}</option>)
                 }
             </NativeSelect>
         </FormControl >

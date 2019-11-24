@@ -1,7 +1,4 @@
-import React, {
-    useState,
-    useEffect
-} from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Grid,
@@ -65,7 +62,7 @@ const CardStoreInfo = (props) => {
                             <span className={classes.cardLabel}>Address:</span>
                         </Grid>
                         <Grid item md={7}>
-                            <span>{`${data.address}, ${data.district.name}, ${data.city.name}`}</span>
+                            <span>{`${data.address}, ${data.district}, ${data.city}`}</span>
                         </Grid>
                     </Grid>
                     <Grid container className={classes.cardRow}>

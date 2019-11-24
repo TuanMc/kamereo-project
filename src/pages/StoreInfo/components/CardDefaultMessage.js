@@ -1,7 +1,4 @@
-import React, {
-    useState,
-    useEffect
-} from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Grid,
@@ -28,6 +25,8 @@ const useStyles = makeStyles(theme => ({
 const CardDefaultMessage = (props) => {
     const classes = useStyles();
 
+    const handleChange = () => {}
+
     return (
         <Card className={classes.defaultMessage}>
             <CardContent>
@@ -38,8 +37,11 @@ const CardDefaultMessage = (props) => {
                     </Grid>
                     <Grid item md={11}>
                         <TextArea
+                            id="text1"
+                            name="text1"
                             placeholder="Write your message"
                             rows={1}
+                            onChange={handleChange}
                         />
                     </Grid>
 
@@ -48,8 +50,11 @@ const CardDefaultMessage = (props) => {
                     </Grid>
                     <Grid item md={11}>
                         <TextArea
+                            id="text2"
+                            name="text2"
                             placeholder="Write your message"
                             rows={1}
+                            onChange={handleChange}
                         />
                     </Grid>
 
@@ -58,8 +63,11 @@ const CardDefaultMessage = (props) => {
                     </Grid>
                     <Grid item md={11}>
                         <TextArea
+                            id="text3"
+                            name="text3"
                             placeholder="Write your message"
                             rows={1}
+                            onChange={handleChange}
                         />
                     </Grid>
 
@@ -68,8 +76,11 @@ const CardDefaultMessage = (props) => {
                     </Grid>
                     <Grid item md={11}>
                         <TextArea
+                            id="text4"
+                            name="text4"
                             placeholder="Write your message"
                             rows={1}
+                            onChange={handleChange}
                         />
                     </Grid>
                     <Grid item md={12} className={classes.cardFooter}>

@@ -8,7 +8,6 @@ import InputBase from '@material-ui/core/InputBase';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 
-
 const BootstrapInput = withStyles(theme => ({
     root: {
         'label + &': {

@@ -3,14 +3,8 @@
     "logoUrl": "",
     "name": "K.O.Thé.",
     "address": "521 Hồ Tùng Mậu",
-    "district": {
-        "id": 1,
-        "name": "Quận 1"
-    },
-    "city": {
-        "id": 2,
-        "name": "HCM"
-    },
+    "district": "Quận 1",
+    "city": "Tp.Hồ Chí Minh",
     "phone": "(338) 886-9944",
     "redInvoice": {
         "name": "K.O.I Thé International Company",

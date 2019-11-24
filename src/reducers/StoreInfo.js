@@ -4,14 +4,8 @@ const INITIAL_STATE = {
         logoUrl: "",
         name: "",
         address: "",
-        district: {
-            id: "",
-            name: ""
-        },
-        city: {
-            id: "",
-            name: ""
-        },
+        district: "",
+        city: "",
         phone: "",
         redInvoice: {
             name: "",
@@ -38,7 +32,6 @@ export default (state = INITIAL_STATE, action) => {
                 errorMessage: action.message
             };
         case "STORE_INFO_UPDATE_SUCCEEDED":
-            console.log("update ",action.payload);
             return {
                 ...state,
                 info: action.payload

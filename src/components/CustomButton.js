@@ -23,5 +23,4 @@ const CustomButton = (props) => {
   )
 }
 
-
 export default CustomButton;

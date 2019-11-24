@@ -4,7 +4,6 @@ import UnderConstruction from "../pages/Error/UnderConstruction";
 import NotFound from "../pages/Error/PageNotFound";
 import StoreInfo from "../pages/StoreInfo";
 
-
 const Routes = () => (
     <>
         <Switch>

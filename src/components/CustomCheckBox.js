@@ -3,7 +3,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import Checkbox from '@material-ui/core/Checkbox';
 
-
 const CustomCheckbox = withStyles({
     root: {
         '&$checked': {

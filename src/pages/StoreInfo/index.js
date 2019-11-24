@@ -11,7 +11,6 @@ import DialogEditStoreInfo from './components/DialogEditStoreInfo';
 import CardDefaultMessage from './components/CardDefaultMessage';
 import CardStoreInfo from './components/CardStoreInfo';
 
-
 const StoreInfo = (props) => {
     const {
         storeInfo,

@@ -1,3 +1,8 @@
+/**
+ * NOTES:
+ * Address and City of red invoice will not have value or validation.
+ */
+
 import React, { useState, useEffect, useRef } from 'react'
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -28,8 +33,28 @@ const useStyles = makeStyles(() => ({
     },
     buttonRemove: {
         margin: 1
-    }
+    },
+    error: {
+        fontSize: '12px',
+        color: 'red',
+        display: 'block',
+        paddingLeft: '7px'
+    },
 }))
+
+const errorList = {
+    name: "",
+    address: "",
+    district: "",
+    city: "",
+    phone: "",
+    redInvoice: {
+        name: "",
+        address: "",
+        zipCode: "",
+        taxCode: ""
+    }
+}
 
 const DialogEditStoreInfo = (props) => {
     const classes = useStyles();
@@ -37,19 +62,14 @@ const DialogEditStoreInfo = (props) => {
     const inputEl = useRef();
     const [districts, setDistricts] = useState(null);
     const [cities, setCities] = useState(null);
+    const [errors, setErrors] = useState({});
     const [data, setData] = useState({
         id: "",
         logoUrl: "",
         name: "",
         address: "",
-        district: {
-            id: "",
-            name: ""
-        },
-        city: {
-            id: "",
-            name: ""
-        },
+        district: "",
+        city: "",
         phone: "",
         redInvoice: {
             name: "",
@@ -62,36 +82,11 @@ const DialogEditStoreInfo = (props) => {
     });
 
     useEffect(() => {
-        setDistricts([
-            {
-                id: 1,
-                value: "Quận 1"
-            },
-            {
-                id: 2,
-                value: "Quận 2"
-            },
-            {
-                id: 3,
-                value: "Quận 3"
-            },
-            {
-                id: 4,
-                value: "Quận 4"
-            },
-        ])
-        setCities([
-            {
-                id: 1,
-                value: "Hà Nội"
-            },
-            {
-                id: 2,
-                value: "TP.Hồ Chí Minh"
-            },
-        ])
+        setDistricts(["Quận 1", "Quận 2", "Quận 3", "Quận 4"]);
+        setCities(["Hà Nội", "Tp.Hồ Chí Minh", "Đà Nẵng"]);
         setData(JSON.parse(JSON.stringify(originalData)))
-    }, [openEditModal])
+        setErrors(JSON.parse(JSON.stringify(errorList)))
+    }, [originalData, openEditModal])
 
     const handleChange = (event, key = null) => {
         const target = event.target
@@ -111,6 +106,44 @@ const DialogEditStoreInfo = (props) => {
         inputEl.current.click();
     }
 
+    const handleSaveClick = () => {
+        if(handleValidation()) {
+            handleUpdateStoreInfo(data);
+            handleCloseModal();
+        }
+    }
+
+    const handleValidation = () => {
+        var error = JSON.parse(JSON.stringify(errorList));
+        var isValid = true;
+
+        for(let key in errors) {                                         // Validate Basic Info
+            if (data[key] === "") {
+                error[key] = "This field is required.";
+                isValid = false;
+            }
+           
+            if(key === "phone" && data[key] !== "") {                   // Phone validation
+                if(!data[key].match(
+                    /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/
+                )) {
+                    error[key] = "Incorrect format. Ex: (338) 886-9944"
+                    isValid = false;
+                }
+            }
+        }
+        
+        for(let key in errors.redInvoice) {                            // Validate Red Invoice
+            if (data.redInvoice[key] === "") {
+                error.redInvoice[key] = "This field is required.";
+                isValid = false;
+            }
+        }
+
+        setErrors(error);
+        return isValid;
+    }
+
     const handleRemove = () => {
         setData({
             ...data,
@@ -123,7 +156,7 @@ const DialogEditStoreInfo = (props) => {
         // const formData = new FormData();
         // formData.append('image', e.target.files[0]);
         // const config = { headers: { 'content-type': 'multipart/form-data' } }		
-            
+
         // try {
         // await axios.post(url, formData, config)
         // } catch (error) {
@@ -197,6 +230,7 @@ const DialogEditStoreInfo = (props) => {
                                     onChange={handleChange}
                                     value={data.name}
                                 />
+                                <span className={classes.error}>{errors.name}</span>
                             </Grid>
                         </Grid>
                         <Grid container spacing={2}>
@@ -209,6 +243,7 @@ const DialogEditStoreInfo = (props) => {
                                     onChange={handleChange}
                                     value={data.address}
                                 />
+                                <span className={classes.error}>{errors.address}</span>
                             </Grid>
                             <Grid item md={3}>
                                 <CustomSelect
@@ -216,9 +251,10 @@ const DialogEditStoreInfo = (props) => {
                                     name="district"
                                     label="District"
                                     onChange={handleChange}
-                                    value={data.district && data.district.id}
+                                    value={data.district}
                                     options={districts}
                                 />
+                                <span className={classes.error}>{errors.district}</span>
                             </Grid>
                             <Grid item md={3}>
                                 <CustomSelect
@@ -226,9 +262,10 @@ const DialogEditStoreInfo = (props) => {
                                     name="city"
                                     label="City"
                                     onChange={handleChange}
-                                    value={data.city && data.city.id}
+                                    value={data.city}
                                     options={cities}
                                 />
+                                <span className={classes.error}>{errors.city}</span>
                             </Grid>
                         </Grid>
                         <Grid container>
@@ -241,6 +278,7 @@ const DialogEditStoreInfo = (props) => {
                                     onChange={handleChange}
                                     value={data.phone}
                                 />
+                                <span className={classes.error}>{errors.phone}</span>
                             </Grid>
                         </Grid>
 
@@ -255,6 +293,7 @@ const DialogEditStoreInfo = (props) => {
                                     onChange={(e) => handleChange(e, 'redInvoice')}
                                     value={data.redInvoice && data.redInvoice.name}
                                 />
+                                <span className={classes.error}>{errors.redInvoice && errors.redInvoice.name}</span>
                             </Grid>
                         </Grid>
                         <Grid container spacing={2}>
@@ -267,6 +306,7 @@ const DialogEditStoreInfo = (props) => {
                                     onChange={(e) => handleChange(e, 'redInvoice')}
                                     value={data.redInvoice && data.redInvoice.address}
                                 />
+                                <span className={classes.error}>{errors.redInvoice && errors.redInvoice.address}</span>
                             </Grid>
                             <Grid item md={3}>
                                 <CustomSelect
@@ -297,6 +337,7 @@ const DialogEditStoreInfo = (props) => {
                                     onChange={(e) => handleChange(e, 'redInvoice')}
                                     value={data.redInvoice && data.redInvoice.taxCode}
                                 />
+                                <span className={classes.error}>{errors.redInvoice && errors.redInvoice.taxCode}</span>
                             </Grid>
                         </Grid>
 
@@ -305,7 +346,7 @@ const DialogEditStoreInfo = (props) => {
                                 <CustomButton
                                     style={{ backgroundColor: '#219249', color: "white" }}
                                     fullWidth
-                                    onClick={() => handleUpdateStoreInfo(data)}
+                                    onClick={handleSaveClick}
                                 >
                                     Save
                                 </CustomButton>
@@ -327,7 +368,5 @@ const DialogEditStoreInfo = (props) => {
         </Dialog>
     )
 }
-
-
 
 export default DialogEditStoreInfo;

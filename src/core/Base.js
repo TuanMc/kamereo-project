@@ -6,7 +6,6 @@ import Header from './Header';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from '../routes/Routes';
 
-
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
