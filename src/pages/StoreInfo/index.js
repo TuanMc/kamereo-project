@@ -16,15 +16,22 @@ const StoreInfo = (props) => {
     const {
         storeInfo,
         errorMessage,
-        onFetchStoreInfo
+        onFetchStoreInfo,
+        onUpdateStoreInfo
     } = props;
     const [openEditModal, setOpenEditModal] = useState(false);
 
     const handleOpenEditModal = () => {
         setOpenEditModal(true);
     }
+    
     const handleCloseModal = () => {
         setOpenEditModal(false);
+    }
+
+    const handleUpdateStoreInfo = (formData) => {
+        const update = JSON.parse(JSON.stringify(formData));
+        onUpdateStoreInfo(update);
     }
 
     useEffect(() => {
@@ -58,6 +65,7 @@ const StoreInfo = (props) => {
                 originalData={storeInfo}
                 openEditModal={openEditModal}
                 handleCloseModal={handleCloseModal}
+                handleUpdateStoreInfo={handleUpdateStoreInfo}
             />
         </>
     )
@@ -72,7 +80,8 @@ const mapStateToProps = states => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchStoreInfo: () => dispatch({ type: "STORE_INFO_FETCH_REQUESTED" })
+        onFetchStoreInfo: () => dispatch({ type: "STORE_INFO_FETCH_REQUESTED" }),
+        onUpdateStoreInfo: (formData) => dispatch({ type: "STORE_INFO_UPDATE_REQUESTED", payload: formData })
     }
 }
 

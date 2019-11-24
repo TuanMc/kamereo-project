@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from "react-router-dom";
 import UnderConstruction from "../pages/Error/UnderConstruction";
 import NotFound from "../pages/Error/PageNotFound";
-import StoreInfo from "../pages/StoreInfo/StoreInfo";
+import StoreInfo from "../pages/StoreInfo";
 
 
 const Routes = () => (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { makeStyles } from '@material-ui/styles';
 import {
     Grid,
@@ -28,15 +28,13 @@ const useStyles = makeStyles(() => ({
     },
     buttonRemove: {
         margin: 1
-    },
-    buttonUpload: {
-        color: '#E8EBF3'
     }
 }))
 
 const DialogEditStoreInfo = (props) => {
     const classes = useStyles();
-    const { originalData, openEditModal, handleCloseModal, handleUpdateStoreInfo } = props
+    const { originalData, openEditModal, handleCloseModal, handleUpdateStoreInfo } = props;
+    const inputEl = useRef();
     const [districts, setDistricts] = useState(null);
     const [cities, setCities] = useState(null);
     const [data, setData] = useState({
@@ -97,8 +95,9 @@ const DialogEditStoreInfo = (props) => {
 
     const handleChange = (event, key = null) => {
         const target = event.target
-        const value = event.value
+        const value = target.value
         const name = target.name
+
         let newFormData = { ...data }
         if (key !== null) {
             newFormData[key][name] = value
@@ -106,6 +105,35 @@ const DialogEditStoreInfo = (props) => {
             newFormData[name] = value
         }
         setData(newFormData)
+    }
+
+    const handleUploadClick = () => {
+        inputEl.current.click();
+    }
+
+    const handleRemove = () => {
+        setData({
+            ...data,
+            logoUrl: ""
+        })
+    }
+
+    const onLoadImage = (e) => {
+        // Call axios to upload image to server
+        // const formData = new FormData();
+        // formData.append('image', e.target.files[0]);
+        // const config = { headers: { 'content-type': 'multipart/form-data' } }		
+            
+        // try {
+        // await axios.post(url, formData, config)
+        // } catch (error) {
+        // console.log(error.response)
+        // }
+
+        setData({
+            ...data,
+            logoUrl: URL.createObjectURL(e.target.files[0])
+        })
     }
 
     return (
@@ -124,7 +152,7 @@ const DialogEditStoreInfo = (props) => {
                     <Grid item md={5}>
                         <h4>STORE IMAGE</h4>
                         <Thumbnail
-                            src={StoreLogo}
+                            src={data.logoUrl !== "" ? data.logoUrl : StoreLogo}
                             style={{
                                 borderRadius: '20px',
                             }}
@@ -134,16 +162,26 @@ const DialogEditStoreInfo = (props) => {
                             <Grid item md={3}>
                                 <Button
                                     className={classes.buttonRemove}
+                                    onClick={handleRemove}
                                 >
                                     Remove
                                     </Button>
                             </Grid>
                             <Grid item md={7}>
+                                <input
+                                    type="file"
+                                    name="myImage"
+                                    ref={inputEl}
+                                    style={{ display: 'none' }}
+                                    onChange={onLoadImage}
+                                />
                                 <CustomButton
+                                    id='single'
                                     style={{ width: '100%' }}
+                                    onClick={handleUploadClick}
                                 >
                                     Upload Image
-                                    </CustomButton>
+                                </CustomButton>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -267,7 +305,7 @@ const DialogEditStoreInfo = (props) => {
                                 <CustomButton
                                     style={{ backgroundColor: '#219249', color: "white" }}
                                     fullWidth
-                                // onClick={handleUpdateStoreInfo}
+                                    onClick={() => handleUpdateStoreInfo(data)}
                                 >
                                     Save
                                 </CustomButton>
@@ -277,6 +315,7 @@ const DialogEditStoreInfo = (props) => {
                                     className={classes.buttonRemove}
                                     fullWidth
                                     style={{ margin: '0px' }}
+                                    onClick={handleCloseModal}
                                 >
                                     Cancel
                                     </Button>
