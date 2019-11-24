@@ -2,8 +2,9 @@ import React from 'react'
 
 export default function PageNotFound() {
     return (
-        <div>
-            Page not found!
-        </div>
+        <h1 style={{ textAlign: 'center' }}>
+            I'm sorry, page not found!
+            😢
+        </h1>
     )
 }
